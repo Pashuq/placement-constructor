@@ -1,25 +1,30 @@
 import React from "react";
 import { CSVLink } from "react-csv";
 
-function ExportPlacementConfig() {
-  const headers = [
-    { label: "First Name", key: "firstname" },
-    { label: "Last Name", key: "lastname" },
-    { label: "Email", key: "email" },
-  ];
+function ExportPlacementConfig({ data }) {
+  // const data = [
+  //   { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
+  //   { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
+  //   { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" },
+  // ];
 
-  const data = [
-    { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
-    { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
-    { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" },
-  ];
+  // const data = [
+  //   ["", "", "", "", "", "", ""],
+  //   ["", "", "", "", "", "", ""],
+  //   ["", "", "", "", "", "", ""],
+  //   ["", "", "", "", "", "", ""],
+  // ];
 
   return (
     <div>
-      <CSVLink data={data} headers={headers} filename={"placement-conf.csv"}>
-        Download me
+      <CSVLink
+        data={data}
+        filename={"placement-conf.csv"}
+        className="btn btn-primary"
+        target="_blank"
+      >
+        Сохранить конфигурацию
       </CSVLink>
-      ;
     </div>
   );
 }

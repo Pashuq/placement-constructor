@@ -2,13 +2,14 @@ import React from "react";
 
 import CSVReader from "react-csv-reader";
 
-function ImportPlacementConfig() {
+function ImportPlacementConfig({ onImportFile }) {
   return (
     <div>
       <CSVReader
-        onFileLoaded={(data, fileInfo, originalFile) =>
-          console.dir(data, fileInfo, originalFile)
-        }
+        cssInputClass="form-control"
+        onFileLoaded={(data) => {
+          onImportFile(data);
+        }}
       />
     </div>
   );

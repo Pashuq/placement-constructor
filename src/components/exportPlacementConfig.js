@@ -2,19 +2,7 @@ import React from "react";
 import { CSVLink } from "react-csv";
 
 function ExportPlacementConfig({ data }) {
-  // const data = [
-  //   { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
-  //   { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
-  //   { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" },
-  // ];
-
-  // const data = [
-  //   ["", "", "", "", "", "", ""],
-  //   ["", "", "", "", "", "", ""],
-  //   ["", "", "", "", "", "", ""],
-  //   ["", "", "", "", "", "", ""],
-  // ];
-
+  //console.log(data);
   return (
     <div>
       <CSVLink

@@ -5,7 +5,89 @@ import ExportPlacementConfig from "../exportPlacementConfig";
 import { Button } from "react-bootstrap";
 
 function Placement({ isConfigField, setConfigField }) {
-  const [placeSize, setPlaceSize] = useState([]);
+  const str = JSON.stringify({ fig: "table" });
+
+  const mockData = [
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      '{"table": "table1", "imgUrl" : "assets/tables/table-1.jpeg", "sizeY": "3", "sizeX": "3", "currentElCoords" : "12-7"}',
+      "",
+      "",
+    ],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+  ];
+
+  const mock2 = [
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", ""],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      '{"table": "table1", "imgUrl" : "assets/tables/table-1.jpeg", "sizeY": "3", "sizeX": "3", "currentElCoords" : "12-7"}',
+      '{"disabled":"true"}',
+      '{"disabled":"true"}',
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      '{"disabled":"true"}',
+      '{"disabled":"true"}',
+      '{"disabled":"true"}',
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      '{"disabled":"true"}',
+      '{"disabled":"true"}',
+      '{"disabled":"true"}',
+    ],
+  ];
+
+  const [placeSize, setPlaceSize] = useState(mock2);
 
   const createPlacementByCoords = (y, x) => {
     const rows = [];
@@ -36,6 +118,10 @@ function Placement({ isConfigField, setConfigField }) {
     setConfigField(true);
   };
 
+  const changeS = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className="min-vh-100">
       {isConfigField ? (
@@ -45,7 +131,7 @@ function Placement({ isConfigField, setConfigField }) {
         />
       ) : (
         <>
-          <PlacementField data={placeSize} />
+          <PlacementField data={placeSize} setPlacementState={changeS} />
           <div className="d-flex justify-content-between">
             <ExportPlacementConfig data={placeSize} />
             <Button

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import ImportPlacementConfig from "../importPlacementConfig";
+import ImportPlacementConfig from "../ImportPlacementConfig";
 
 function PlacementBar({ onSubmit, onImportFile }) {
   return (

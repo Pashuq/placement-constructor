@@ -1,5 +1,4 @@
 import React from "react";
-import { CarouselItem } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 
 function StaffField() {

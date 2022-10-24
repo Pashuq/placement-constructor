@@ -10,13 +10,20 @@ function StaffItem({ name }) {
     cursor: "grab",
   };
 
+  const staffPayload = {
+    table: "table1",
+    imgUrl: "assets/tables/table-1.jpeg",
+    sizeY: "3",
+    sizeX: "3",
+  };
+
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "table",
-    item: { name },
+    item: { name, ...staffPayload },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
       if (item && dropResult) {
-        alert(`You dropped ${item.name} into ${dropResult.name}!`);
+        //console.log(`You dropped ${item.name} into ${dropResult.name}!`);
       }
     },
     collect: (monitor) => ({

@@ -6,20 +6,25 @@ function PlacementGridElement({ elementData }) {
   const [elData, setElementData] = useState(elementData);
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: "table",
-    drop: () => ({ name: "Dustbin" }),
+    //drop: () => ({ name: "Dustbin" }),
+    drop: (itemk) => {
+      //console.log(itemk);
+      setElementData(itemk);
+    },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
     }),
   }));
+
   const isActive = canDrop && isOver;
 
   let backgroundColor = "rgba(0,0,0, 0)";
 
   if (isActive) {
-    backgroundColor = "red";
+    backgroundColor = "rgba(40, 167, 69, .5)";
   } else if (canDrop) {
-    backgroundColor = "green";
+    backgroundColor = "rgba(220, 53, 69, .5)";
   }
 
   // const parsedELData = isNotEmptyElement(elData) ? JSON.parse(elData) : null;

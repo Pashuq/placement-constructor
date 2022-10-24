@@ -2,7 +2,13 @@ import React from "react";
 
 import PlacementGridElement from "../PlacementGridElement";
 
-function PlacementRow({ rowData, rowId, setByCoords, isValidPlace }) {
+function PlacementRow({
+  rowData,
+  rowId,
+  setByCoords,
+  isValidPlace,
+  deleteItemWithDepend,
+}) {
   return (
     <div className="placementfield__row">
       {rowData.map((gridElement, index) => {
@@ -15,6 +21,7 @@ function PlacementRow({ rowData, rowId, setByCoords, isValidPlace }) {
             elementId={index}
             setByCoords={setByCoords}
             isValidPlace={isValidPlace}
+            deleteItemWithDepend={deleteItemWithDepend}
           />
         );
       })}

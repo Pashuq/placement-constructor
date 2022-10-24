@@ -20,7 +20,7 @@ function Staff() {
             {staff.map((item, index) => {
               return (
                 <StaffItem
-                  key={item.name + index}
+                  key={Date.now() + index}
                   name={item.table}
                   imageUrl={item.imgUrl}
                   sizeX={item.sizeX}

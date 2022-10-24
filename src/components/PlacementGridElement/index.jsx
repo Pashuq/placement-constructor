@@ -8,6 +8,7 @@ function PlacementGridElement({
   elementId,
   setByCoords,
   isValidPlace,
+  deleteItemWithDepend,
 }) {
   const [elData, setElementData] = useState(elementData);
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -39,10 +40,8 @@ function PlacementGridElement({
   let backgroundColor = "rgba(0,0,0, 0)";
 
   if (isActive) {
-    //r
     backgroundColor = "rgba(40, 167, 69, 1)";
   } else if (canDrop) {
-    //gr
     backgroundColor = "rgba(40, 167, 69, .5)";
   }
 
@@ -60,15 +59,34 @@ function PlacementGridElement({
   const itemStyles = {
     width: WIDTH_AND_HEIGHT_BLOCK + "px",
     height: WIDTH_AND_HEIGHT_BLOCK + "px",
-    cursor: "Pointer",
   };
 
   const Item = isNotEmptyElement(elData) ? (
     isTargetElement(elData) ? (
       <div
-        style={{ ...itemStyles }}
-        className="placementfield__item placementfield__item_disabled "
+        style={{ ...itemStyles, position: "relative" }}
+        className="placementfield__item placementfield__item_disabled"
       >
+        <div
+          onClick={() => {
+            deleteItemWithDepend(rowId, elementId, elData);
+          }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "absolute",
+            top: "0",
+            left: "0",
+            right: "0",
+            bottom: "0",
+            outline: "1px solid rgba(40, 167, 69, .5)",
+            cursor: "pointer",
+            backgroundColor: "#ffffff",
+          }}
+        >
+          &#9746;
+        </div>
         <img
           alt={elData.table}
           src={elData.imgUrl}

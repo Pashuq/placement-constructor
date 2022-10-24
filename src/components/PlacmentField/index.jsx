@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import cn from "classnames";
-import { WIDTH_AND_HEIGHT_BLOCK } from "../../const";
 
 import PlacementRow from "../PlacementRow";
 
-function PlacementField({ data, setByCoords, isValidPlace }) {
+function PlacementField({
+  data,
+  setByCoords,
+  isValidPlace,
+  deleteItemWithDepend,
+}) {
   const [borderErrorIndicator, setBorderErrorIndicator] = useState(false);
 
   return (
@@ -23,7 +27,7 @@ function PlacementField({ data, setByCoords, isValidPlace }) {
             rowData={row}
             setByCoords={setByCoords}
             isValidPlace={isValidPlace}
-            // changeBorderIndicator={changeBorderIndicator}
+            deleteItemWithDepend={deleteItemWithDepend}
           />
         );
       })}

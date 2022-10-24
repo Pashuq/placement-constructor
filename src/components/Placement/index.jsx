@@ -3,7 +3,6 @@ import PlacementBar from "../PlacementBar";
 import PlacementField from "../PlacmentField";
 import ExportPlacementConfig from "../ExportPlacementConfig";
 import { Button } from "react-bootstrap";
-import debounce from "lodash.debounce";
 
 function Placement({ isConfigField, setConfigField }) {
   const [placeSize, setPlaceSize] = useState([]);
@@ -24,9 +23,20 @@ function Placement({ isConfigField, setConfigField }) {
     setPlaceSize(newPlaceSize);
   };
 
+  const deleteItemWithDepend = (yCord, xCord, data) => {
+    const newPlaceSize = [...placeSize];
+
+    for (let y = yCord; y < yCord + Number(data.sizeY); y++) {
+      for (let x = xCord; x < xCord + Number(data.sizeX); x++) {
+        newPlaceSize[y][x] = "";
+      }
+    }
+
+    setPlaceSize(newPlaceSize);
+  };
+
   //проверка помещается ли staff
   const isValidPlace = ({ xCord, yCord, xSize, ySize }) => {
-    //console.log(xCord, yCord, xSize, ySize);
     for (let y = yCord; y < Number(ySize) + Number(yCord); y++) {
       if (placeSize[y] !== undefined) {
         for (let x = xCord; x < Number(xSize) + Number(xCord); x++) {
@@ -51,9 +61,6 @@ function Placement({ isConfigField, setConfigField }) {
     ySize,
     data,
   }) => {
-    //находим координату интересуемого элемента
-    //const currentItem = state[yCord][xCord];
-
     //цикл по row
     for (let y = Number(yCord); y < Number(ySize) + Number(yCord); y++) {
       //цикл по элементу
@@ -117,6 +124,7 @@ function Placement({ isConfigField, setConfigField }) {
             data={placeSize}
             setByCoords={setByCoords}
             isValidPlace={isValidPlace}
+            deleteItemWithDepend={deleteItemWithDepend}
           />
           <div className="d-flex justify-content-between">
             <Button
@@ -129,9 +137,8 @@ function Placement({ isConfigField, setConfigField }) {
             >
               Вернуться к конфигуратору
             </Button>
+            <ExportPlacementConfig data={placeSize} />
           </div>
-
-          <ExportPlacementConfig data={placeSize} />
         </>
       )}
     </div>

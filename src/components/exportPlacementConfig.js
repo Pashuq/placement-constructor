@@ -1,14 +1,9 @@
 import React from "react";
-import { CSVLink, CSVDownload } from "react-csv";
-//import { CSVLink } from "react-csv";
 import { useCSVDownloader, usePapaParse } from "react-papaparse";
-const {
-  Parser,
-  transforms: { unwind },
-} = require("json2csv");
+const { Parser } = require("json2csv");
 
 function ExportPlacementConfig({ data }) {
-  const { jsonToCSV } = usePapaParse();
+  //const { jsonToCSV } = usePapaParse();
   const { CSVDownloader, Type } = useCSVDownloader();
 
   const formattedData = data.map((row) => {

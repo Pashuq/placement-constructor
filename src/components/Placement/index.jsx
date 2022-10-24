@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PlacementBar from "../PlacementBar";
 import PlacementField from "../PlacmentField";
-import ExportPlacementConfig from "../ExportPlacementConfig";
+import ExportPlacementConfig from "../exportPlacementConfig";
 import { Button } from "react-bootstrap";
 
 function Placement({ isConfigField, setConfigField }) {

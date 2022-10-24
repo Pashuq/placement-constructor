@@ -6,7 +6,7 @@ import Placement from "../Placement";
 import StaffField from "./staffField";
 
 function Layout() {
-  const [isConfigField, setConfigField] = useState(false);
+  const [isConfigField, setConfigField] = useState(true);
   return (
     <Container>
       <Row>

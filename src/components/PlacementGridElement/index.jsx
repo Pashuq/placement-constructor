@@ -4,7 +4,7 @@ import { WIDTH_AND_HEIGHT_BLOCK, TARGET_PROP } from "../../const";
 function PlacementGridElement({ elementData }) {
   const [elData, setElementData] = useState(elementData);
 
-  const parsedELData = isNotEmptyElement(elData) ? JSON.parse(elData) : null;
+  // const parsedELData = isNotEmptyElement(elData) ? JSON.parse(elData) : null;
 
   function isTargetElement(obj) {
     return obj.hasOwnProperty(TARGET_PROP);
@@ -24,16 +24,16 @@ function PlacementGridElement({ elementData }) {
   };
 
   const A = isNotEmptyElement(elData) ? (
-    isTargetElement(parsedELData) ? (
+    isTargetElement(elData) ? (
       <div
         style={itemStyles}
         className="placementfield__item placementfield__item_disabled "
       >
         <img
-          alt={parsedELData.table}
-          src={parsedELData.imgUrl}
-          width={WIDTH_AND_HEIGHT_BLOCK * Number(parsedELData.sizeX)}
-          height={WIDTH_AND_HEIGHT_BLOCK * Number(parsedELData.sizeY)}
+          alt={elData.table}
+          src={elData.imgUrl}
+          width={WIDTH_AND_HEIGHT_BLOCK * Number(elData.sizeX)}
+          height={WIDTH_AND_HEIGHT_BLOCK * Number(elData.sizeY)}
         />
       </div>
     ) : (

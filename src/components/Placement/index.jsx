@@ -68,17 +68,6 @@ function Placement({ isConfigField, setConfigField }) {
     ],
   ];
 
-  const pd1 = {
-    table: "table1",
-    imgUrl: "assets/tables/table-1.jpeg",
-    sizeY: "3",
-    sizeX: "3",
-    currentElCoords: "12-7",
-  };
-  const pds = JSON.stringify(pd1);
-
-  //console.log(pds);
-
   const mock3 = [
     [
       {
@@ -159,25 +148,7 @@ function Placement({ isConfigField, setConfigField }) {
     ],
   ];
 
-  const [placeSize, setPlaceSize] = useState(mock2);
-
-  const newMock3 = mock3.map((row) => {
-    const newRow = row.map((item) => {
-      return JSON.stringify(item);
-    });
-    return JSON.stringify(newRow);
-  });
-
-  const newMock3Str = JSON.stringify(newMock3);
-
-  const parseMock3 = JSON.parse(newMock3Str);
-
-  const parseMock3new = parseMock3.map((row) => {
-    const newRow = JSON.parse(row);
-    return newRow.map((item) => {
-      return JSON.parse(item);
-    });
-  });
+  const [placeSize, setPlaceSize] = useState(mock3);
 
   const createPlacementByCoords = (y, x) => {
     const rows = [];
@@ -200,7 +171,15 @@ function Placement({ isConfigField, setConfigField }) {
   };
 
   const handleImportConfButtonClick = (data) => {
-    setPlaceSize(data);
+    const dataWithOutHeaders = data.slice(1).map((row) => {
+      const newRow = row.map((item) => {
+        const formattedItem = item.replaceAll("&", ",");
+        return JSON.parse(formattedItem);
+      });
+      return newRow;
+    });
+
+    setPlaceSize(dataWithOutHeaders);
     setConfigField(false);
   };
 
@@ -221,9 +200,8 @@ function Placement({ isConfigField, setConfigField }) {
         />
       ) : (
         <>
-          {/* <PlacementField data={placeSize} setPlacementState={changeS} />
+          <PlacementField data={placeSize} setPlacementState={changeS} />
           <div className="d-flex justify-content-between">
-            
             <Button
               className="mb-4"
               variant="primary"
@@ -234,9 +212,9 @@ function Placement({ isConfigField, setConfigField }) {
             >
               Вернуться к конфигуратору
             </Button>
-          </div> */}
+          </div>
 
-          <ExportPlacementConfig data={placeSize} jsonData={newMock3} />
+          <ExportPlacementConfig data={placeSize} />
         </>
       )}
     </div>

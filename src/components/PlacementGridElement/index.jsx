@@ -1,4 +1,3 @@
-import debounce from "lodash.debounce";
 import React, { useState } from "react";
 import { useDrop } from "react-dnd";
 import { WIDTH_AND_HEIGHT_BLOCK, TARGET_PROP } from "../../const";
@@ -13,14 +12,8 @@ function PlacementGridElement({
   const [elData, setElementData] = useState(elementData);
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: "table",
-    //drop: () => ({ name: "Dustbin" }),
     drop: (item, monitor) => {
-      //setElementData(item);
-      //console.log("coords", rowId, elementId);
       setByCoords(rowId, elementId, item);
-    },
-    hover: (item, monitor) => {
-      //hoverWithDependentItems(item);
     },
     canDrop: (item) => {
       const res = isValidPlace({
@@ -46,14 +39,12 @@ function PlacementGridElement({
   let backgroundColor = "rgba(0,0,0, 0)";
 
   if (isActive) {
-    //green
-    backgroundColor = "rgba(40, 167, 69, .5)";
+    //r
+    backgroundColor = "rgba(40, 167, 69, 1)";
   } else if (canDrop) {
-    //red
-    backgroundColor = "rgba(220, 53, 69, .5)";
+    //gr
+    backgroundColor = "rgba(40, 167, 69, .5)";
   }
-
-  // const parsedELData = isNotEmptyElement(elData) ? JSON.parse(elData) : null;
 
   function isTargetElement(obj) {
     return obj.hasOwnProperty(TARGET_PROP);
@@ -75,9 +66,7 @@ function PlacementGridElement({
   const Item = isNotEmptyElement(elData) ? (
     isTargetElement(elData) ? (
       <div
-        //ref={drop}
         style={{ ...itemStyles }}
-        //data-testid="dustbin"
         className="placementfield__item placementfield__item_disabled "
       >
         <img
@@ -89,9 +78,7 @@ function PlacementGridElement({
       </div>
     ) : (
       <div
-        //ref={drop}
         style={{ ...itemStyles }}
-        //data-testid="dustbin"
         className="placementfield__item placementfield__item_disabled "
       ></div>
     )

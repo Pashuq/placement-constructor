@@ -1,20 +1,22 @@
 import React from "react";
 import { useDrag } from "react-dnd";
+import { WIDTH_AND_HEIGHT_BLOCK } from "../../const";
 
-function StaffItem({ name }) {
+function StaffItem({ name, imageUrl, sizeX, sizeY }) {
   const style = {
     display: "inline-flex",
     backgroundColor: "rgba(0,0,0, .1)",
-    width: "30px",
-    height: "30px",
+    width: WIDTH_AND_HEIGHT_BLOCK * sizeX + "px",
+    height: WIDTH_AND_HEIGHT_BLOCK * sizeY + "px",
     cursor: "grab",
   };
 
+  //WIDTH_AND_HEIGHT_BLOCK
   const staffPayload = {
-    table: "table1",
-    imgUrl: "assets/tables/table-1.jpeg",
-    sizeY: "3",
-    sizeX: "3",
+    table: name,
+    imgUrl: imageUrl,
+    sizeY,
+    sizeX,
   };
 
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -22,9 +24,6 @@ function StaffItem({ name }) {
     item: { name, ...staffPayload },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
-      if (item && dropResult) {
-        //console.log(`You dropped ${item.name} into ${dropResult.name}!`);
-      }
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -35,7 +34,7 @@ function StaffItem({ name }) {
 
   return (
     <div ref={drag} style={{ ...style, opacity }} data-testid={`box`}>
-      {name}
+      <img src={imageUrl} alt={name} />
     </div>
   );
 }

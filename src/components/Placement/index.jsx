@@ -3,7 +3,7 @@ import PlacementBar from "../PlacementBar";
 import PlacementField from "../PlacmentField";
 import ExportPlacementConfig from "../ExportPlacementConfig";
 import { Button } from "react-bootstrap";
-//mport { modifyStirngCommaToAmpersand } from "../../helpers";
+import debounce from "lodash.debounce";
 
 function Placement({ isConfigField, setConfigField }) {
   const [placeSize, setPlaceSize] = useState([]);
@@ -12,7 +12,7 @@ function Placement({ isConfigField, setConfigField }) {
     const newPlaceSize = [...placeSize];
     newPlaceSize[yCord][xCord] = data;
 
-    disableDependentItems({
+    actionToDependentItems({
       state: newPlaceSize,
       xCord,
       yCord,
@@ -24,8 +24,26 @@ function Placement({ isConfigField, setConfigField }) {
     setPlaceSize(newPlaceSize);
   };
 
+  //проверка помещается ли staff
+  const isValidPlace = ({ xCord, yCord, xSize, ySize }) => {
+    //console.log(xCord, yCord, xSize, ySize);
+    for (let y = yCord; y < Number(ySize) + Number(yCord); y++) {
+      if (placeSize[y] !== undefined) {
+        for (let x = xCord; x < Number(xSize) + Number(xCord); x++) {
+          if (placeSize[y][x] === undefined) {
+            return false;
+          }
+        }
+      } else {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   //элементы в которых не лежит блок на прямую, но которые требуется как подложка
-  const disableDependentItems = ({
+  const actionToDependentItems = ({
     state,
     xCord,
     yCord,
@@ -95,7 +113,11 @@ function Placement({ isConfigField, setConfigField }) {
         />
       ) : (
         <>
-          <PlacementField data={placeSize} setByCoords={setByCoords} />
+          <PlacementField
+            data={placeSize}
+            setByCoords={setByCoords}
+            isValidPlace={isValidPlace}
+          />
           <div className="d-flex justify-content-between">
             <Button
               className="mb-4"

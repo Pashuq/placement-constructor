@@ -8,7 +8,6 @@ const {
 } = require("json2csv");
 
 function ExportPlacementConfig({ data }) {
-  console.log(data);
   const { jsonToCSV } = usePapaParse();
   const { CSVDownloader, Type } = useCSVDownloader();
 

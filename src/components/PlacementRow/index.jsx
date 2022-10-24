@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import PlacementGridElement from "../PlacementGridElement";
 
-function PlacementRow({ rowData, changeBorderIndicator }) {
+function PlacementRow({ rowData, changeBorderIndicator, rowId, setByCoords }) {
   return (
     <div className="placementfield__row">
       {rowData.map((gridElement, index) => {
@@ -11,6 +11,9 @@ function PlacementRow({ rowData, changeBorderIndicator }) {
           <PlacementGridElement
             elementData={gridElement}
             key={elementKey}
+            rowId={rowId}
+            elementId={index}
+            setByCoords={setByCoords}
             // changeBorderIndicator={changeBorderIndicator}
           />
         );

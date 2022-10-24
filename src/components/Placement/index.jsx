@@ -3,152 +3,16 @@ import PlacementBar from "../PlacementBar";
 import PlacementField from "../PlacmentField";
 import ExportPlacementConfig from "../ExportPlacementConfig";
 import { Button } from "react-bootstrap";
-import { modifyStirngCommaToAmpersand } from "../../helpers";
+//mport { modifyStirngCommaToAmpersand } from "../../helpers";
 
 function Placement({ isConfigField, setConfigField }) {
-  const mock2 = [
-    [
-      "{'table': 'table1'; 'imgUrl' : 'assets/tables/table-1.jpeg', 'sizeY': '3', 'sizeX': '3', 'currentElCoords' : '12-7'}",
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-      "",
-      "",
-      "",
-      "",
-      '{"table": "table1", "imgUrl" : "assets/tables/table-1.jpeg", "sizeY": "3", "sizeX": "3", "currentElCoords" : "12-7"}',
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-    ],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      '{"table": "table1", "imgUrl" : "assets/tables/table-1.jpeg", "sizeY": "3", "sizeX": "3", "currentElCoords" : "12-7"}',
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-    ],
-    [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-    ],
-    [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-    ],
-  ];
+  const [placeSize, setPlaceSize] = useState([]);
 
-  const mock3 = [
-    [
-      {
-        table: "table1",
-        imgUrl: "assets/tables/table-1.jpeg",
-        sizeY: "3",
-        sizeX: "3",
-        currentElCoords: "12-7",
-      },
-      { disabled: "true" },
-      { disabled: "true" },
-      "0",
-      "0",
-      "0",
-      "0",
-      {
-        table: "table1",
-        imgUrl: "assets/tables/table-1.jpeg",
-        sizeY: "3",
-        sizeX: "3",
-        currentElCoords: "12-7",
-      },
-      { disabled: "true" },
-      { disabled: "true" },
-    ],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    [
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      {
-        table: "table1",
-        imgUrl: "assets/tables/table-1.jpeg",
-        sizeY: "3",
-        sizeX: "3",
-        currentElCoords: "12-7",
-      },
-      { disabled: "true" },
-      { disabled: "true" },
-    ],
-    [
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      { disabled: "true" },
-      { disabled: "true" },
-      { disabled: "true" },
-    ],
-    [
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      { disabled: "true" },
-      { disabled: "true" },
-      { disabled: "true" },
-    ],
-  ];
-
-  const [placeSize, setPlaceSize] = useState(mock3);
+  const setByCoords = (xCord, yCord, data) => {
+    const newPlaceSize = [...placeSize];
+    newPlaceSize[xCord][yCord] = data;
+    setPlaceSize(newPlaceSize);
+  };
 
   const createPlacementByCoords = (y, x) => {
     const rows = [];
@@ -187,10 +51,6 @@ function Placement({ isConfigField, setConfigField }) {
     setConfigField(true);
   };
 
-  const changeS = (data) => {
-    console.log(data);
-  };
-
   return (
     <div className="min-vh-100 d-flex flex-column">
       {isConfigField ? (
@@ -200,7 +60,7 @@ function Placement({ isConfigField, setConfigField }) {
         />
       ) : (
         <>
-          <PlacementField data={placeSize} setPlacementState={changeS} />
+          <PlacementField data={placeSize} setByCoords={setByCoords} />
           <div className="d-flex justify-content-between">
             <Button
               className="mb-4"

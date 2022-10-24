@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import { useDrop } from "react-dnd";
 import { WIDTH_AND_HEIGHT_BLOCK, TARGET_PROP } from "../../const";
 
-function PlacementGridElement({ elementData }) {
+function PlacementGridElement({ elementData, rowId, elementId, setByCoords }) {
   const [elData, setElementData] = useState(elementData);
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: "table",
     //drop: () => ({ name: "Dustbin" }),
-    drop: (itemk) => {
-      //console.log(itemk);
-      setElementData(itemk);
+    drop: (item, monitor) => {
+      //setElementData(item);
+      console.log("coords", rowId, elementId);
+      setByCoords(rowId, elementId, item);
+    },
+    hover: (item, monitor) => {
+      //console.log(monitor);
+    },
+    canDrop: (item) => {
+      return true;
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -17,13 +24,21 @@ function PlacementGridElement({ elementData }) {
     }),
   }));
 
+  //   const throttleHover = _.throttle( (item) => {
+  //     if (item.source !== index) {
+  //         moveColumn(item.source, index);
+  //     }
+  // }, 50 )
+
   const isActive = canDrop && isOver;
 
   let backgroundColor = "rgba(0,0,0, 0)";
 
   if (isActive) {
+    //green
     backgroundColor = "rgba(40, 167, 69, .5)";
   } else if (canDrop) {
+    //red
     backgroundColor = "rgba(220, 53, 69, .5)";
   }
 
@@ -74,7 +89,7 @@ function PlacementGridElement({ elementData }) {
       ref={drop}
       style={{ ...itemStyles, backgroundColor }}
       data-testid="dustbin"
-      className="placementfield__item 555"
+      className="placementfield__item "
     ></div>
   );
 

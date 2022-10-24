@@ -4,7 +4,7 @@ import { useDrag } from "react-dnd";
 function StaffItem({ name }) {
   const style = {
     display: "inline-flex",
-    backgroundColor: "red",
+    backgroundColor: "rgba(0,0,0, .1)",
     width: "30px",
     height: "30px",
     cursor: "grab",

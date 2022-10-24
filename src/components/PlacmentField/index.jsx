@@ -4,7 +4,7 @@ import { WIDTH_AND_HEIGHT_BLOCK } from "../../const";
 
 import PlacementRow from "../PlacementRow";
 
-function PlacementField({ data, setPlacementState }) {
+function PlacementField({ data, setByCoords }) {
   const [borderErrorIndicator, setBorderErrorIndicator] = useState(false);
 
   return (
@@ -19,7 +19,9 @@ function PlacementField({ data, setPlacementState }) {
         return (
           <PlacementRow
             key={rowKey}
+            rowId={index}
             rowData={row}
+            setByCoords={setByCoords}
             // changeBorderIndicator={changeBorderIndicator}
           />
         );

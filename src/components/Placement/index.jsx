@@ -8,10 +8,45 @@ import { Button } from "react-bootstrap";
 function Placement({ isConfigField, setConfigField }) {
   const [placeSize, setPlaceSize] = useState([]);
 
-  const setByCoords = (xCord, yCord, data) => {
+  const setByCoords = (yCord, xCord, data) => {
     const newPlaceSize = [...placeSize];
-    newPlaceSize[xCord][yCord] = data;
+    newPlaceSize[yCord][xCord] = data;
+
+    disableDependentItems({
+      state: newPlaceSize,
+      xCord,
+      yCord,
+      xSize: data.sizeX,
+      ySize: data.sizeY,
+      data: { disabled: true },
+    });
+
     setPlaceSize(newPlaceSize);
+  };
+
+  //элементы в которых не лежит блок на прямую, но которые требуется как подложка
+  const disableDependentItems = ({
+    state,
+    xCord,
+    yCord,
+    xSize,
+    ySize,
+    data,
+  }) => {
+    //находим координату интересуемого элемента
+    //const currentItem = state[yCord][xCord];
+
+    //цикл по row
+    for (let y = Number(yCord); y < Number(ySize) + Number(yCord); y++) {
+      //цикл по элементу
+      for (let x = Number(xCord); x < Number(xSize) + Number(xCord); x++) {
+        if (!state[y][x]) {
+          state[y][x] = data;
+        }
+      }
+    }
+
+    return state;
   };
 
   const createPlacementByCoords = (y, x) => {

@@ -192,7 +192,7 @@ function Placement({ isConfigField, setConfigField }) {
   };
 
   return (
-    <div className="min-vh-100">
+    <div className="min-vh-100 d-flex flex-column">
       {isConfigField ? (
         <PlacementBar
           onSubmit={handleFormSubmit}

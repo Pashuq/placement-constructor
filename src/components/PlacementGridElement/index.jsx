@@ -1,8 +1,26 @@
 import React, { useState } from "react";
+import { useDrop } from "react-dnd";
 import { WIDTH_AND_HEIGHT_BLOCK, TARGET_PROP } from "../../const";
 
 function PlacementGridElement({ elementData }) {
   const [elData, setElementData] = useState(elementData);
+  const [{ canDrop, isOver }, drop] = useDrop(() => ({
+    accept: "table",
+    drop: () => ({ name: "Dustbin" }),
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  }));
+  const isActive = canDrop && isOver;
+
+  let backgroundColor = "rgba(0,0,0, 0)";
+
+  if (isActive) {
+    backgroundColor = "red";
+  } else if (canDrop) {
+    backgroundColor = "green";
+  }
 
   // const parsedELData = isNotEmptyElement(elData) ? JSON.parse(elData) : null;
 
@@ -23,10 +41,12 @@ function PlacementGridElement({ elementData }) {
     cursor: "Pointer",
   };
 
-  const A = isNotEmptyElement(elData) ? (
+  const Item = isNotEmptyElement(elData) ? (
     isTargetElement(elData) ? (
       <div
-        style={itemStyles}
+        //ref={drop}
+        style={{ ...itemStyles }}
+        //data-testid="dustbin"
         className="placementfield__item placementfield__item_disabled "
       >
         <img
@@ -38,19 +58,22 @@ function PlacementGridElement({ elementData }) {
       </div>
     ) : (
       <div
-        style={itemStyles}
+        //ref={drop}
+        style={{ ...itemStyles }}
+        //data-testid="dustbin"
         className="placementfield__item placementfield__item_disabled "
-      >
-        d
-      </div>
+      ></div>
     )
   ) : (
-    <div style={itemStyles} className="placementfield__item">
-      0
-    </div>
+    <div
+      ref={drop}
+      style={{ ...itemStyles, backgroundColor }}
+      data-testid="dustbin"
+      className="placementfield__item 555"
+    ></div>
   );
 
-  return A;
+  return Item;
 }
 
 export default PlacementGridElement;

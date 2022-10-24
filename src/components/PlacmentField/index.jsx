@@ -5,7 +5,7 @@ import PlacementRow from "../PlacementRow";
 
 function PlacementField({ data, setPlacementState }) {
   return (
-    <div className="placementfield-wrapper border border-primary rounded">
+    <div className="align-self-center placementfield-wrapper border border-primary rounded">
       {data.map((row, index) => {
         const rowKey = Date.now() + "rowKey" + index;
         return <PlacementRow key={rowKey} rowData={row} />;

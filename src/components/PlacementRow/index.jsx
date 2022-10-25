@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 
 import PlacementGridElement from "../PlacementGridElement";
 
-function PlacementRow({ rowData }) {
+function PlacementRow({
+  rowData,
+  rowId,
+  setByCoords,
+  isValidPlace,
+  deleteItemWithDepend,
+}) {
   return (
     <div className="placementfield__row">
       {rowData.map((gridElement, index) => {
         const elementKey = Date.now() + "elementKey" + index;
         return (
-          <PlacementGridElement elementData={gridElement} key={elementKey} />
+          <PlacementGridElement
+            elementData={gridElement}
+            key={elementKey}
+            rowId={rowId}
+            elementId={index}
+            setByCoords={setByCoords}
+            isValidPlace={isValidPlace}
+            deleteItemWithDepend={deleteItemWithDepend}
+          />
         );
       })}
     </div>

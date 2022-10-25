@@ -3,181 +3,76 @@ import PlacementBar from "../PlacementBar";
 import PlacementField from "../PlacmentField";
 import ExportPlacementConfig from "../exportPlacementConfig";
 import { Button } from "react-bootstrap";
-import { modifyStirngCommaToAmpersand } from "../../helpers";
 
 function Placement({ isConfigField, setConfigField }) {
-  const mock2 = [
-    [
-      "{'table': 'table1'; 'imgUrl' : 'assets/tables/table-1.jpeg', 'sizeY': '3', 'sizeX': '3', 'currentElCoords' : '12-7'}",
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-      "",
-      "",
-      "",
-      "",
-      '{"table": "table1", "imgUrl" : "assets/tables/table-1.jpeg", "sizeY": "3", "sizeX": "3", "currentElCoords" : "12-7"}',
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-    ],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", ""],
-    [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      '{"table": "table1", "imgUrl" : "assets/tables/table-1.jpeg", "sizeY": "3", "sizeX": "3", "currentElCoords" : "12-7"}',
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-    ],
-    [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-    ],
-    [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-      '{"disabled":"true"}',
-    ],
-  ];
+  const [placeSize, setPlaceSize] = useState([]);
 
-  const pd1 = {
-    table: "table1",
-    imgUrl: "assets/tables/table-1.jpeg",
-    sizeY: "3",
-    sizeX: "3",
-    currentElCoords: "12-7",
+  const setByCoords = (yCord, xCord, data) => {
+    const newPlaceSize = [...placeSize];
+    newPlaceSize[yCord][xCord] = data;
+
+    actionToDependentItems({
+      state: newPlaceSize,
+      xCord,
+      yCord,
+      xSize: data.sizeX,
+      ySize: data.sizeY,
+      data: { disabled: true },
+    });
+
+    setPlaceSize(newPlaceSize);
   };
-  const pds = JSON.stringify(pd1);
 
-  //console.log(pds);
+  const deleteItemWithDepend = (yCord, xCord, data) => {
+    const newPlaceSize = [...placeSize];
 
-  const mock3 = [
-    [
-      {
-        table: "table1",
-        imgUrl: "assets/tables/table-1.jpeg",
-        sizeY: "3",
-        sizeX: "3",
-        currentElCoords: "12-7",
-      },
-      { disabled: "true" },
-      { disabled: "true" },
-      "0",
-      "0",
-      "0",
-      "0",
-      {
-        table: "table1",
-        imgUrl: "assets/tables/table-1.jpeg",
-        sizeY: "3",
-        sizeX: "3",
-        currentElCoords: "12-7",
-      },
-      { disabled: "true" },
-      { disabled: "true" },
-    ],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    [
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      {
-        table: "table1",
-        imgUrl: "assets/tables/table-1.jpeg",
-        sizeY: "3",
-        sizeX: "3",
-        currentElCoords: "12-7",
-      },
-      { disabled: "true" },
-      { disabled: "true" },
-    ],
-    [
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      { disabled: "true" },
-      { disabled: "true" },
-      { disabled: "true" },
-    ],
-    [
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      { disabled: "true" },
-      { disabled: "true" },
-      { disabled: "true" },
-    ],
-  ];
+    for (let y = yCord; y < yCord + Number(data.sizeY); y++) {
+      for (let x = xCord; x < xCord + Number(data.sizeX); x++) {
+        newPlaceSize[y][x] = "";
+      }
+    }
 
-  const [placeSize, setPlaceSize] = useState(mock2);
+    setPlaceSize(newPlaceSize);
+  };
 
-  const newMock3 = mock3.map((row) => {
-    const newRow = row.map((item) => {
-      return JSON.stringify(item);
-    });
-    return JSON.stringify(newRow);
-  });
+  //проверка помещается ли staff
+  const isValidPlace = ({ xCord, yCord, xSize, ySize }) => {
+    for (let y = yCord; y < Number(ySize) + Number(yCord); y++) {
+      if (placeSize[y] !== undefined) {
+        for (let x = xCord; x < Number(xSize) + Number(xCord); x++) {
+          if (placeSize[y][x] === undefined) {
+            return false;
+          }
+        }
+      } else {
+        return false;
+      }
+    }
 
-  const newMock3Str = JSON.stringify(newMock3);
+    return true;
+  };
 
-  const parseMock3 = JSON.parse(newMock3Str);
+  //элементы в которых не лежит блок на прямую, но которые требуется как подложка
+  const actionToDependentItems = ({
+    state,
+    xCord,
+    yCord,
+    xSize,
+    ySize,
+    data,
+  }) => {
+    //цикл по row
+    for (let y = Number(yCord); y < Number(ySize) + Number(yCord); y++) {
+      //цикл по элементу
+      for (let x = Number(xCord); x < Number(xSize) + Number(xCord); x++) {
+        if (!state[y][x]) {
+          state[y][x] = data;
+        }
+      }
+    }
 
-  const parseMock3new = parseMock3.map((row) => {
-    const newRow = JSON.parse(row);
-    return newRow.map((item) => {
-      return JSON.parse(item);
-    });
-  });
+    return state;
+  };
 
   const createPlacementByCoords = (y, x) => {
     const rows = [];
@@ -200,7 +95,15 @@ function Placement({ isConfigField, setConfigField }) {
   };
 
   const handleImportConfButtonClick = (data) => {
-    setPlaceSize(data);
+    const dataWithOutHeaders = data.slice(1).map((row) => {
+      const newRow = row.map((item) => {
+        const formattedItem = item.replaceAll("&", ",");
+        return JSON.parse(formattedItem);
+      });
+      return newRow;
+    });
+
+    setPlaceSize(dataWithOutHeaders);
     setConfigField(false);
   };
 
@@ -208,12 +111,8 @@ function Placement({ isConfigField, setConfigField }) {
     setConfigField(true);
   };
 
-  const changeS = (data) => {
-    console.log(data);
-  };
-
   return (
-    <div className="min-vh-100">
+    <div className="min-vh-100 d-flex flex-column">
       {isConfigField ? (
         <PlacementBar
           onSubmit={handleFormSubmit}
@@ -221,9 +120,13 @@ function Placement({ isConfigField, setConfigField }) {
         />
       ) : (
         <>
-          {/* <PlacementField data={placeSize} setPlacementState={changeS} />
+          <PlacementField
+            data={placeSize}
+            setByCoords={setByCoords}
+            isValidPlace={isValidPlace}
+            deleteItemWithDepend={deleteItemWithDepend}
+          />
           <div className="d-flex justify-content-between">
-            
             <Button
               className="mb-4"
               variant="primary"
@@ -234,9 +137,8 @@ function Placement({ isConfigField, setConfigField }) {
             >
               Вернуться к конфигуратору
             </Button>
-          </div> */}
-
-          <ExportPlacementConfig data={placeSize} jsonData={newMock3} />
+            <ExportPlacementConfig data={placeSize} />
+          </div>
         </>
       )}
     </div>

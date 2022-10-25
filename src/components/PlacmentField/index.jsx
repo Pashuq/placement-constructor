@@ -1,14 +1,35 @@
-import React from "react";
-import { WIDTH_AND_HEIGHT_BLOCK } from "../../const";
+import React, { useState } from "react";
+import cn from "classnames";
 
 import PlacementRow from "../PlacementRow";
 
-function PlacementField({ data, setPlacementState }) {
+function PlacementField({
+  data,
+  setByCoords,
+  isValidPlace,
+  deleteItemWithDepend,
+}) {
+  const [borderErrorIndicator, setBorderErrorIndicator] = useState(false);
+
   return (
-    <div className="placementfield-wrapper border border-primary rounded">
+    <div
+      className={cn("align-self-center placementfield-wrapper border rounded", {
+        "border-primary": !borderErrorIndicator,
+        "border-danger": borderErrorIndicator,
+      })}
+    >
       {data.map((row, index) => {
         const rowKey = Date.now() + "rowKey" + index;
-        return <PlacementRow key={rowKey} rowData={row} />;
+        return (
+          <PlacementRow
+            key={rowKey}
+            rowId={index}
+            rowData={row}
+            setByCoords={setByCoords}
+            isValidPlace={isValidPlace}
+            deleteItemWithDepend={deleteItemWithDepend}
+          />
+        );
       })}
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import ImportPlacementConfig from "../importPlacementConfig";
@@ -19,30 +19,26 @@ function PlacementBar({ onSubmit, onImportFile }) {
           <Form.Label>Y &#8593;</Form.Label>
           <Form.Control
             type="number"
-            placeholder="Длина помещения в метрах"
+            placeholder="Длина помещения"
             name="y"
             required
             max="50"
             min="1"
           />
-          <Form.Text className="text-muted">
-            Введите длину помещения в метрах
-          </Form.Text>
+          <Form.Text className="text-muted">Введите длину помещения</Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicX">
           <Form.Label>X &#8594;</Form.Label>
           <Form.Control
             type="number"
-            placeholder="Ширина помещения в метрах"
+            placeholder="Ширина помещения"
             name="x"
             required
             max="50"
             min="1"
           />
-          <Form.Text className="text-muted">
-            Введите ширину помещения в метрах
-          </Form.Text>
+          <Form.Text className="text-muted">Введите ширину помещения</Form.Text>
         </Form.Group>
 
         <Button className="mb-4" variant="primary" type="submit">

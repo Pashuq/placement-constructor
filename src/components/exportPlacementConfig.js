@@ -1,37 +1,41 @@
 import React from "react";
-//import { CSVLink } from "react-csv";
 import { useCSVDownloader, usePapaParse } from "react-papaparse";
+const { Parser } = require("json2csv");
 
-function ExportPlacementConfig({ data, jsonData }) {
-  const { jsonToCSV } = usePapaParse();
+function ExportPlacementConfig({ data }) {
+  //const { jsonToCSV } = usePapaParse();
   const { CSVDownloader, Type } = useCSVDownloader();
 
-  //const newDat = JSON.stringify(data);
+  const formattedData = data.map((row) => {
+    const newRow = row.map((item) => {
+      try {
+        const json = JSON.stringify(item).replaceAll(",", "&");
+        return json;
+      } catch (error) {
+        return item;
+      }
+    });
+    return newRow;
+  });
 
-  //const results2 = jsonToCSV(data);
-
-  //console.log(results1);
-  //console.log(results2);
-
-  const aa = JSON.stringify(jsonData);
-  //const results1 = jsonToCSV(aa);
-
-  console.log(aa);
+  const json2csvParser = new Parser({ header: true });
+  const csv = json2csvParser.parse(formattedData);
 
   return (
     <div>
-      {/* <CSVDownloader
+      <CSVDownloader
         className="btn btn-primary"
         type={Type.Button}
         filename={"placeConfig"}
         bom={true}
         config={{
-          delimiter: ",",
+          delimiter: "",
+          header: {},
         }}
-        data={results1}
+        data={csv}
       >
         Сохранить конфигурацию
-      </CSVDownloader> */}
+      </CSVDownloader>
     </div>
   );
 }

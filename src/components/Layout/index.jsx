@@ -3,10 +3,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Placement from "../Placement";
-import StaffField from "./staffField";
+import Staff from "../Staff";
 
 function Layout() {
-  const [isConfigField, setConfigField] = useState(false);
+  const [isConfigField, setConfigField] = useState(true);
   return (
     <Container>
       <Row>
@@ -18,7 +18,7 @@ function Layout() {
         </Col>
         {!isConfigField ? (
           <Col sm={4}>
-            <StaffField />
+            <Staff />
           </Col>
         ) : null}
       </Row>
